@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 // import 'package:practice_flutter_ddd/application/category_app_service.dart';
 // import 'package:practice_flutter_ddd/infrastructure/category/category_factory.dart';
 // import 'package:practice_flutter_ddd/infrastructure/category/category_repository.dart';
-// import 'package:practice_flutter_ddd/infrastructure/db_helper.dart';
+import 'package:practice_flutter_ddd/infrastructure/db_helper.dart';
 // import 'package:practice_flutter_ddd/infrastructure/note/note_repository.dart';
 import 'package:practice_flutter_ddd/init.dart';
 
@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Provider<DbHelper>(
-        //   create: (_) => DbHelper(),
-        //   dispose: (_, helper) async => await helper.dispose(),
-        // ),
+        Provider<DbHelper>(
+          create: (_) => DbHelper(),
+          dispose: (_, helper) async => await helper.dispose(),
+        ),
         // Provider<CategoryRepositoryBase>(
         //   create: (context) => CategoryRepository(
         //     dbHelper: context.read<DbHelper>(),
@@ -45,12 +45,12 @@ class MyApp extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        // Provider<AppInit>(
-        //   create: (context) => AppInit(
-        //     navigatorKey: GlobalKey<NavigatorState>(),
-        //     dbHelper: context.read<DbHelper>(),
-        //   ),
-        // ),
+        Provider<AppInit>(
+          create: (context) => AppInit(
+            navigatorKey: GlobalKey<NavigatorState>(),
+            dbHelper: context.read<DbHelper>(),
+          ),
+        ),
       ],
       child: const _Init(),
     );

@@ -5,7 +5,7 @@ const _dbFile = 'ddd.db';
 const _dbVersion = 1;
 
 class DbHelper {
-  // Database _db;
+  late Database _db;
   // Transaction _txn;
 
   // Future<Database> open() async {
@@ -44,10 +44,10 @@ class DbHelper {
   //   return _db;
   // }
 
-  // Future<void> dispose() async {
-  //   await _db?.close();
-  //   _db = null;
-  // }
+  Future<void> dispose() async {
+    await _db.close();
+    // _db = null;
+  }
 
   // Future<T> transaction<T>(Future<T> Function() f) async {
   //   return _db.transaction<T>((txn) async {
