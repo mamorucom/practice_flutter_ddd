@@ -6,7 +6,7 @@ const _dbVersion = 1;
 
 class DbHelper {
   late Database _db;
-  // Transaction _txn;
+  late Transaction _txn;
 
   // Future<Database> open() async {
   //   final databasesPath = await getDatabasesPath();
@@ -59,12 +59,12 @@ class DbHelper {
   //   });
   // }
 
-  // Future<List<Map<String, dynamic>>> rawQuery(
-  //   String sql, [
-  //   List<dynamic> arguments,
-  // ]) async {
-  //   return await (_txn ?? _db).rawQuery(sql, arguments);
-  // }
+  Future<List<Map<String, dynamic>>> rawQuery(
+    String sql, [
+    List<dynamic>? arguments,
+  ]) async {
+    return await (_txn ?? _db).rawQuery(sql, arguments);
+  }
 
   // Future<int> rawInsert(
   //   String sql, [
