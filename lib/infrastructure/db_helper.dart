@@ -6,7 +6,7 @@ const _dbVersion = 1;
 
 class DbHelper {
   late Database _db;
-  late Transaction? _txn;
+  Transaction? _txn;
 
   Future<Database> open() async {
     final databasesPath = await getDatabasesPath();
