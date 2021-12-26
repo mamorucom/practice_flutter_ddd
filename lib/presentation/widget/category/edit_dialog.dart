@@ -13,6 +13,7 @@ class CategoryEditDialog extends StatelessWidget {
   final TextEditingController _nameController;
 
   CategoryEditDialog({
+    Key? key,
     required BuildContext context,
     required this.heading,
     required this.buttonLabel,
@@ -20,7 +21,8 @@ class CategoryEditDialog extends StatelessWidget {
     String? initialName,
   })  : _context = context,
         _nameController = context.read<TextEditingController>()
-          ..text = initialName ?? '';
+          ..text = initialName ?? '',
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

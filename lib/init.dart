@@ -9,13 +9,14 @@ class AppInit {
     required this.navigatorKey,
     required DbHelper dbHelper,
   }) {
-    // dbHelper.open().then((_) {
-    //   navigatorKey.currentState.pushAndRemoveUntil<void>(
-    //     MaterialPageRoute<dynamic>(
-    //       builder: (_) => const CategoryListPage(),
-    //     ),
-    //     (_) => false,
-    //   );
-    // });
+    dbHelper.open().then((_) {
+      // ページを戻らせたくない場合にpushAndRemoveUntilを使用
+      navigatorKey.currentState?.pushAndRemoveUntil<void>(
+        MaterialPageRoute<dynamic>(
+          builder: (_) => const CategoryListPage(),
+        ),
+        (_) => false,
+      );
+    });
   }
 }
