@@ -12,7 +12,8 @@ abstract class NoteRepositoryBase {
   Future<T> transaction<T>(Future<T> Function() f);
   Future<Note?> find(NoteId id);
   Future<Note?> findByTitle(NoteTitle title);
-  Future<List<Note>> findAll();
+  Future<Note?> findByCategory(CategoryId categoryId);
+  Future<int?> countByCategory(CategoryId categoryId);
   Future<void> save(Note note);
   Future<void> remove(Note note);
 }
@@ -29,13 +30,16 @@ class NoteRepository implements NoteRepositoryBase {
     final id = data['id'].toString();
     final title = data['title'].toString();
     final body = data['body'].toString();
-    final categoryId = data['categoryId'].toString();
+    final categoryId = data['category'].toString();
 
     return Note(
       id: NoteId(id),
       title: NoteTitle(title),
       body: NoteBody(body),
       categoryId: CategoryId(categoryId),
+      // categoryId: categoryId == null || categoryId.isEmpty
+      //     ? null
+      //     : CategoryId(categoryId),
     );
   }
 
@@ -66,14 +70,28 @@ class NoteRepository implements NoteRepositoryBase {
   }
 
   @override
-  Future<List<Note>> findAll() async {
+  Future<Note?> findByCategory(CategoryId categoryId) async {
     final list = await _dbHelper.rawQuery(
-      'SELECT * FROM notes ORDER BY name',
+      'SELECT * FROM notes WHERE category_id = ?',
+      <String>[categoryId.value],
     );
 
-    // 検索してもなければnull,
-    // あればlist->map->ひとつずつノートオブジェクトに変換してList形式で返す.
-    return list.isEmpty ? <Note>[] : list.map((data) => toNote(data)).toList();
+    // 検索してもなければnull, あればmap->ノートオブジェクトに変換して返す.
+    return list.isEmpty ? null : toNote(list[0]);
+  }
+
+  ///
+  /// カテゴリカウント
+  ///
+  @override
+  Future<int?> countByCategory(CategoryId categoryId) async {
+    final list = await _dbHelper.rawQuery(
+      'SELECT COUNT(*) AS cnt FROM notes WHERE category_id = ?',
+      <String>[categoryId.value],
+    );
+
+    final row = Map<String, int>.from(list[0]);
+    return row['cnt'];
   }
 
   ///
@@ -82,8 +100,16 @@ class NoteRepository implements NoteRepositoryBase {
   @override
   Future<void> save(Note note) async {
     await _dbHelper.rawInsert(
-      'INSERT OR REPLACE INTO notes (id, name) VALUES (?, ?)',
-      <String>[note.id.value, note.body.value],
+      '''
+        INSERT OR REPLACE INTO notes
+        (id, title, body, category_id) VALUES (?, ?, ?, ?)
+      ''',
+      <String>[
+        note.id.value,
+        note.title.value,
+        note.body.value,
+        note.categoryId.value,
+      ],
     );
   }
 
