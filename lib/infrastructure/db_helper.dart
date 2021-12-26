@@ -16,8 +16,7 @@ class DbHelper {
       path,
       version: _dbVersion,
       onCreate: (Database db, int version) async {
-        await db.execute(
-            '''
+        await db.execute('''
           CREATE TABLE notes (
             id TEXT NOT NULL,
             title TEXT NOT NULL,
@@ -27,14 +26,12 @@ class DbHelper {
           )
         ''');
 
-        await db.execute(
-            '''
+        await db.execute('''
           CREATE INDEX idx_category_id
           ON notes(category_id)
         ''');
 
-        await db.execute(
-            '''
+        await db.execute('''
           CREATE TABLE categories (
             id TEXT NOT NULL,
             name TEXT NOT NULL,
@@ -83,17 +80,17 @@ class DbHelper {
     return await (_txn ?? _db).rawQuery(sql, arguments);
   }
 
-  // Future<int> rawInsert(
-  //   String sql, [
-  //   List<dynamic> arguments,
-  // ]) async {
-  //   return await (_txn ?? _db).rawInsert(sql, arguments);
-  // }
+  Future<int> rawInsert(
+    String sql, [
+    List<dynamic>? arguments,
+  ]) async {
+    return await (_txn ?? _db).rawInsert(sql, arguments);
+  }
 
-  // Future<int> rawDelete(
-  //   String sql, [
-  //   List<dynamic> arguments,
-  // ]) async {
-  //   return await (_txn ?? _db).rawDelete(sql, arguments);
-  // }
+  Future<int> rawDelete(
+    String sql, [
+    List<dynamic>? arguments,
+  ]) async {
+    return await (_txn ?? _db).rawDelete(sql, arguments);
+  }
 }

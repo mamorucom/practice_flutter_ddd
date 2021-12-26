@@ -8,7 +8,7 @@ export 'package:practice_flutter_ddd/domain/category/category.dart';
 
 abstract class CategoryRepositoryBase {
   Future<T> transaction<T>(Future<T> Function() f);
-  Future<Category> find(CategoryId id);
+  Future<Category?> find(CategoryId id);
   Future<Category?> findByName(CategoryName name);
   Future<List<Category>> findAll();
   Future<void> save(Category category);
@@ -39,9 +39,13 @@ class CategoryRepository implements CategoryRepositoryBase {
   }
 
   @override
-  Future<Category> find(CategoryId id) {
-    // TODO: implement find
-    throw UnimplementedError();
+  Future<Category?> find(CategoryId id) async {
+    final list = await _dbHelper.rawQuery(
+      'SELECT * FROM categories WHERE id = ?',
+      <String>[id.value],
+    );
+
+    return list.isEmpty ? null : toCategory(list[0]);
   }
 
   @override
@@ -69,14 +73,18 @@ class CategoryRepository implements CategoryRepositoryBase {
   }
 
   @override
-  Future<void> save(Category category) {
-    // TODO: implement save
-    throw UnimplementedError();
+  Future<void> save(Category category) async {
+    await _dbHelper.rawInsert(
+      'INSERT OR REPLACE INTO categories (id, name) VALUES (?, ?)',
+      <String>[category.id.value, category.name.value],
+    );
   }
 
   @override
-  Future<void> remove(Category category) {
-    // TODO: implement remove
-    throw UnimplementedError();
+  Future<void> remove(Category category) async {
+    await _dbHelper.rawDelete(
+      'DELETE FROM categories WHERE id = ?',
+      <String>[category.id.value],
+    );
   }
 }
