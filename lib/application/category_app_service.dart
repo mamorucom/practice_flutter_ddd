@@ -93,7 +93,7 @@ class CategoryAppService {
   ///
   /// カテゴリを削除する
   ///
-  Future<void> deleteCategory({
+  Future<void> removeCategory({
     required String id,
   }) async {
     // 値オブジェクト生成
@@ -111,13 +111,10 @@ class CategoryAppService {
 
       // TODO: メモがあればエラー
 
+      // 削除
       await _repository.remove(targetCategory);
     });
   }
-
-  ///
-  /// カテゴリの一覧を削除する
-  ///
 
   ///
   /// カテゴリ一覧を取得

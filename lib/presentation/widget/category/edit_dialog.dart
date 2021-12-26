@@ -56,6 +56,10 @@ class CategoryEditDialog extends StatelessWidget {
     );
   }
 
+  ///
+  /// ダイアログ表示
+  /// (こんなことできるのか...)
+  ///
   void show() {
     showDialog<void>(
       context: _context,

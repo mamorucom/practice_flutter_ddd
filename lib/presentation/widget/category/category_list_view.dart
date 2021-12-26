@@ -43,15 +43,15 @@ class CategoryListView extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            // CategoryEditButton(category: category),
-            // CategoryRemoveButton(categoryId: category.id),
+            CategoryEditButton(category: category),
+            CategoryRemoveButton(categoryId: category.id),
           ],
         ),
-        // onTap: () => Navigator.of(context).push(
-        //   MaterialPageRoute<void>(
-        //     builder: (_) => NoteListPage(category: category),
-        //   ),
-        // ),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => NoteListPage(category: category),
+          ),
+        ),
       ),
     );
   }

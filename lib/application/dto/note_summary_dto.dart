@@ -1,6 +1,6 @@
 // import 'package:meta/meta.dart';
 
-// import 'package:flutter_ddd/domain/note/note.dart';
+// import 'package:practice_flutter_ddd/domain/note/note.dart';
 
 // @immutable
 // class NoteSummaryDto {

@@ -24,6 +24,22 @@ class CategoryNotifier with ChangeNotifier {
   }
 
   ///
+  /// カテゴリ名更新イベント
+  ///
+  Future<void> updateCategory({required String id, String? name}) async {
+    await _app.updateCategory(id: id, name: name ?? '');
+    _updateList();
+  }
+
+  ///
+  /// カテゴリ削除イベント
+  ///
+  Future<void> removeCategory(String categoryId) async {
+    await _app.removeCategory(id: categoryId);
+    _updateList();
+  }
+
+  ///
   /// リストの更新イベント
   ///
   void _updateList() {
