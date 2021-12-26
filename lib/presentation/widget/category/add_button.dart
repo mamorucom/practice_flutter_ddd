@@ -17,7 +17,7 @@ class CategoryAddButton extends StatelessWidget {
         heading: 'New category',
         buttonLabel: 'SAVE',
         onSave: ({String? name}) async {
-          // await context.read<CategoryNotifier>().saveCategory(name: name!);
+          await context.read<CategoryNotifier>().saveCategory(name: name!);
         },
       ).show(),
     );

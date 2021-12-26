@@ -6,7 +6,7 @@ const _dbVersion = 1;
 
 class DbHelper {
   late Database _db;
-  late Transaction _txn;
+  late Transaction? _txn;
 
   Future<Database> open() async {
     final databasesPath = await getDatabasesPath();
@@ -52,20 +52,34 @@ class DbHelper {
     // _db = null;
   }
 
-  // Future<T> transaction<T>(Future<T> Function() f) async {
-  //   return _db.transaction<T>((txn) async {
-  //     _txn = txn;
-  //     return await f();
-  //   }).then((v) {
-  //     _txn = null;
-  //     return v;
-  //   });
-  // }
+  ///
+  /// トランザクション処理
+  /// - 実行したい処理は引数で渡す
+  ///
+  Future<T> transaction<T>(Future<T> Function() f) async {
+    final v = await _db.transaction((txn) async {
+      _txn = txn;
+      await f();
+    });
 
+    _txn = null;
+    return v;
+
+    // return _db.transaction<T>((txn) async {
+    //   _txn = txn;
+    //   return await f();
+    // }).then;
+  }
+
+  ///
+  /// 生のクエリ実行
+  /// - 引数で与えたクエリを実行する
+  ///
   Future<List<Map<String, dynamic>>> rawQuery(
     String sql, [
     List<dynamic>? arguments,
   ]) async {
+    // return await (_txn).rawQuery(sql, arguments);
     return await (_txn ?? _db).rawQuery(sql, arguments);
   }
 

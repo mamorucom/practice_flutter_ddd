@@ -34,9 +34,8 @@ class CategoryRepository implements CategoryRepositoryBase {
   }
 
   @override
-  Future<T> transaction<T>(Future<T> Function() f) {
-    // TODO: implement transaction
-    throw UnimplementedError();
+  Future<T> transaction<T>(Future<T> Function() f) async {
+    return await _dbHelper.transaction<T>(() async => await f());
   }
 
   @override
@@ -52,14 +51,21 @@ class CategoryRepository implements CategoryRepositoryBase {
       <String>[name.value],
     );
 
-    //検索してもなければnull, あればmap->カテゴリーオブジェクトに変換して返す.
+    // 検索してもなければnull, あればmap->カテゴリーオブジェクトに変換して返す.
     return list.isEmpty ? null : toCategory(list[0]);
   }
 
   @override
-  Future<List<Category>> findAll() {
-    // TODO: implement findAll
-    throw UnimplementedError();
+  Future<List<Category>> findAll() async {
+    final list = await _dbHelper.rawQuery(
+      'SELECT * FROM categories ORDER BY name',
+    );
+
+    // 検索してもなければnull,
+    // あればlist->map->ひとつずつカテゴリーオブジェクトに変換してList形式で返す.
+    return list.isEmpty
+        ? <Category>[]
+        : list.map((data) => toCategory(data)).toList();
   }
 
   @override

@@ -10,21 +10,49 @@ class CategoryListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final list = context.select((CategoryNotifier notifier) => notifier.list);
+    // CategoryNotifierのlistが更新されたらリビルド
+    final list = context.select((CategoryNotifier notifier) => notifier.list);
 
-    // if (list == null)
-    //   return const Center(child: CircularProgressIndicator());
-    // else if (list.isEmpty)
-    //   return const Center(
-    //     child: Text(
-    //       'No category yet',
-    //       style: TextStyle(color: Colors.grey),
-    //     ),
-    //   );
-    // return ListView.builder(
-    //   itemCount: list.length,
-    //   itemBuilder: (context, index) => _listTile(context, list[index]),
-    // );
-    return Container();
+    if (list == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (list.isEmpty) {
+      return const Center(
+        child: Text(
+          'No category yet',
+          style: TextStyle(color: Colors.grey),
+        ),
+      );
+    } else {
+      return ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) => _listTile(context, list[index]),
+      );
+    }
+  }
+
+  Widget _listTile(BuildContext context, CategoryDto category) {
+    return Card(
+      child: ListTile(
+        leading: const IconTheme(
+          data: IconThemeData(color: Colors.amber),
+          child: Icon(Icons.folder),
+        ),
+        title: Text(category.name),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // CategoryEditButton(category: category),
+            // CategoryRemoveButton(categoryId: category.id),
+          ],
+        ),
+        // onTap: () => Navigator.of(context).push(
+        //   MaterialPageRoute<void>(
+        //     builder: (_) => NoteListPage(category: category),
+        //   ),
+        // ),
+      ),
+    );
   }
 }
