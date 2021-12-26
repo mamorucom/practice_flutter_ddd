@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:practice_flutter_ddd/common/exception.dart';
 import 'package:practice_flutter_ddd/presentation/widget/error_dialog.dart';
 
-typedef SaveCallback = Future<void> Function({@required String name});
+typedef SaveCallback = Future<void> Function({required String name});
 
 class CategoryEditDialog extends StatelessWidget {
   final BuildContext _context;
