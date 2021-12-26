@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog({
-    @required BuildContext context,
-    @required this.message,
+    required BuildContext context,
+    required this.message,
     this.onConfirm,
   }) : _context = context;
 
   final BuildContext _context;
   final String message;
-  final VoidCallback onConfirm;
+  final VoidCallback? onConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,9 @@ class ErrorDialog extends StatelessWidget {
       title: const Text('Error', style: TextStyle(color: Colors.red)),
       content: Text(message),
       actions: <Widget>[
-        RaisedButton(
+        ElevatedButton(
           child: const Text('OK', style: TextStyle(color: Colors.white)),
-          color: Colors.red,
+          // color: Colors.red,
           onPressed: () {
             Navigator.of(context).pop();
             onConfirm?.call();

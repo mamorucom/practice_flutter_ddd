@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_ddd/common/exception.dart';
-import 'package:flutter_ddd/presentation/widget/error_dialog.dart';
+import 'package:practice_flutter_ddd/common/exception.dart';
+import 'package:practice_flutter_ddd/presentation/widget/error_dialog.dart';
 
 typedef SaveCallback = Future<void> Function({@required String name});
 
@@ -13,11 +13,11 @@ class CategoryEditDialog extends StatelessWidget {
   final TextEditingController _nameController;
 
   CategoryEditDialog({
-    @required BuildContext context,
-    @required this.heading,
-    @required this.buttonLabel,
-    @required this.onSave,
-    String initialName,
+    required BuildContext context,
+    required this.heading,
+    required this.buttonLabel,
+    required this.onSave,
+    String? initialName,
   })  : _context = context,
         _nameController = context.read<TextEditingController>()
           ..text = initialName ?? '';
@@ -40,11 +40,11 @@ class CategoryEditDialog extends StatelessWidget {
             ],
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: const Text('CANCEL'),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            FlatButton(
+            TextButton(
               child: Text(buttonLabel),
               onPressed: () async => _onPressed(context),
             ),

@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 // import 'package:practice_flutter_ddd/infrastructure/db_helper.dart';
 // import 'package:practice_flutter_ddd/infrastructure/note/note_repository.dart';
 import 'package:practice_flutter_ddd/init.dart';
+
+import 'presentation/page/init.dart';
 // import 'package:practice_flutter_ddd/presentation/notifier/category_notifier.dart';
 // import 'package:practice_flutter_ddd/presentation/page/init.dart';
 

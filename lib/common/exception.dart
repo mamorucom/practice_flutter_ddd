@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 class GenericException implements Exception {
   final ExceptionCode code;
   final dynamic info;
@@ -32,34 +30,34 @@ class GenericException implements Exception {
 }
 
 class NotFoundException extends GenericException {
-  NotFoundException({@required ExceptionCode code, @required String target})
+  NotFoundException({required ExceptionCode code, required String target})
       : assert(code != null),
         assert(target != null && target.isNotEmpty),
         super(code: code, info: target);
 }
 
 class NotUniqueException extends GenericException {
-  NotUniqueException({@required ExceptionCode code, @required String value})
+  NotUniqueException({required ExceptionCode code, required String value})
       : assert(code != null),
         assert(value != null && value.isNotEmpty),
         super(code: code, info: value);
 }
 
 class NullEmptyException extends GenericException {
-  NullEmptyException({@required ExceptionCode code})
+  NullEmptyException({required ExceptionCode code})
       : assert(code != null),
         super(code: code);
 }
 
 class LengthException extends GenericException {
-  LengthException({@required ExceptionCode code, @required int max})
+  LengthException({required ExceptionCode code, required int max})
       : assert(code != null),
         assert(max != null && max > 0),
         super(code: code, info: max);
 }
 
 class RemovalException extends GenericException {
-  RemovalException({@required ExceptionCode code})
+  RemovalException({required ExceptionCode code})
       : assert(code != null),
         super(code: code);
 }
