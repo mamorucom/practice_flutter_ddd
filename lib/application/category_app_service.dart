@@ -4,6 +4,8 @@ import 'package:practice_flutter_ddd/domain/category/category_factory.dart';
 import 'package:practice_flutter_ddd/domain/category/category_repository.dart';
 // import 'package:practice_flutter_ddd/domain/category/category_repository_base.dart';
 import 'package:practice_flutter_ddd/domain/category/category_service.dart';
+import 'package:practice_flutter_ddd/domain/category/value/category_id.dart';
+import 'package:practice_flutter_ddd/domain/category/value/category_name.dart';
 
 import 'dto/category_dto.dart';
 // import 'package:practice_flutter_ddd/domain/note/note_repository_base.dart';
@@ -54,10 +56,64 @@ class CategoryAppService {
   ///
   /// カテゴリを更新する
   ///
+  Future<void> updateCategory({
+    required String id,
+    required String name,
+  }) async {
+    // 値オブジェクト生成
+    final targetId = CategoryId(id);
+
+    await _repository.transaction(() async {
+      // 検索
+      final targetCategory = await _repository.find(targetId);
+      if (targetCategory == null) {
+        throw NotFoundException(
+          code: ExceptionCode.categoryName,
+          target: targetId.value,
+        );
+      }
+
+      // 変更
+      final newName = CategoryName(name);
+      // 他のカテゴリとの重複チェック
+      if (newName != targetCategory.name &&
+          await _service.isDuplicated(newName)) {
+        throw NotUniqueException(
+          code: ExceptionCode.categoryName,
+          value: newName.value,
+        );
+      }
+      targetCategory.changeName(newName);
+
+      // 保存
+      await _repository.save(targetCategory);
+    });
+  }
 
   ///
   /// カテゴリを削除する
   ///
+  Future<void> deleteCategory({
+    required String id,
+  }) async {
+    // 値オブジェクト生成
+    final targetId = CategoryId(id);
+
+    await _repository.transaction(() async {
+      // 検索
+      final targetCategory = await _repository.find(targetId);
+      if (targetCategory == null) {
+        throw NotFoundException(
+          code: ExceptionCode.categoryName,
+          target: targetId.value,
+        );
+      }
+
+      // TODO: メモがあればエラー
+
+      await _repository.remove(targetCategory);
+    });
+  }
 
   ///
   /// カテゴリの一覧を削除する

@@ -72,6 +72,9 @@ class CategoryRepository implements CategoryRepositoryBase {
         : list.map((data) => toCategory(data)).toList();
   }
 
+  ///
+  /// 新規挿入（追加）または置換（更新）
+  ///
   @override
   Future<void> save(Category category) async {
     await _dbHelper.rawInsert(
