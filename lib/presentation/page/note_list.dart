@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practice_flutter_ddd/presentation/widget/note/edit_dialog.dart';
 import 'package:provider/provider.dart';
 // import 'package:practice_flutter_ddd/domain/note/note_repository.dart';
 // import 'package:practice_flutter_ddd/presentation/widget/note/edit_dialog.dart';
@@ -28,12 +29,16 @@ class NoteListPage extends StatelessWidget {
         //     categoryId: category.id,
         //   ),
         // ),
-        // ChangeNotifierProvider<TitleEditingController>(
-        //   create: (_) => TitleEditingController(),
-        // ),
-        // ChangeNotifierProvider<BodyEditingController>(
-        //   create: (_) => BodyEditingController(),
-        // ),
+
+        ///
+        /// EditingControllerをChangeNotifierしてる!?
+        ///
+        ChangeNotifierProvider<TitleEditingController>(
+          create: (_) => TitleEditingController(),
+        ),
+        ChangeNotifierProvider<BodyEditingController>(
+          create: (_) => BodyEditingController(),
+        ),
       ],
       child: Scaffold(
         appBar: AppBar(title: Text(category.name)),
