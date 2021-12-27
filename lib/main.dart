@@ -4,9 +4,9 @@ import 'package:practice_flutter_ddd/application/category_app_service.dart';
 import 'domain/category/category_factory.dart';
 import 'domain/category/category_repository.dart';
 import 'package:practice_flutter_ddd/infrastructure/db_helper.dart';
-// import 'package:practice_flutter_ddd/infrastructure/note/note_repository.dart';
 import 'package:practice_flutter_ddd/init.dart';
 
+import 'domain/note/note_repository.dart';
 import 'presentation/page/init.dart';
 import 'package:practice_flutter_ddd/presentation/notifier/category_notifier.dart';
 import 'package:practice_flutter_ddd/presentation/page/init.dart';
@@ -31,11 +31,11 @@ class MyApp extends StatelessWidget {
             dbHelper: context.read<DbHelper>(),
           ),
         ),
-        // Provider<NoteRepositoryBase>(
-        //   create: (context) => NoteRepository(
-        //     dbHelper: context.read<DbHelper>(),
-        //   ),
-        // ),
+        Provider<NoteRepositoryBase>(
+          create: (context) => NoteRepository(
+            dbHelper: context.read<DbHelper>(),
+          ),
+        ),
         ChangeNotifierProvider<CategoryNotifier>(
           create: (context) => CategoryNotifier(
             app: CategoryAppService(

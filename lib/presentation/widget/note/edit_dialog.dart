@@ -26,6 +26,7 @@ class NoteEditDialog extends StatelessWidget {
   final BodyEditingController _bodyController;
 
   NoteEditDialog({
+    Key? key,
     required BuildContext context,
     required this.heading,
     required this.buttonLabel,
@@ -37,7 +38,8 @@ class NoteEditDialog extends StatelessWidget {
         _titleController = context.read<TitleEditingController>()
           ..text = initialTitle ?? '',
         _bodyController = context.read<BodyEditingController>()
-          ..text = initialBody ?? '';
+          ..text = initialBody ?? '',
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

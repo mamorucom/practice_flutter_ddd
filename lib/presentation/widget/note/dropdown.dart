@@ -20,9 +20,13 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
   late CategoryDto _value;
 
   @override
-  Widget build(BuildContext context) {
-    _value ??= widget.value;
+  void initState() {
+    super.initState();
+    _value = widget.value;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return InputDecorator(
       decoration: const InputDecoration(
         labelText: 'Category',

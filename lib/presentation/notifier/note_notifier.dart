@@ -19,12 +19,12 @@ class NoteNotifier with ChangeNotifier {
   ///
   /// メモ保存イベント
   ///
-  void saveNote({
+  Future<void> saveNote({
     required String title,
     required String body,
     required String categoryId,
-  }) {
-    _app.saveNote(title: title, body: body, categoryId: categoryId);
+  }) async {
+    await _app.saveNote(title: title, body: body, categoryId: categoryId);
     _updateList();
   }
 
