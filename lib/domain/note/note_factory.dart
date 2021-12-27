@@ -22,7 +22,7 @@ export 'package:practice_flutter_ddd/domain/note/note.dart';
 abstract class NoteFactoryBase {
   Note create({
     required String title,
-    required body,
+    required String body,
     required String categoryId,
   });
 }
@@ -31,7 +31,7 @@ class NoteFactory implements NoteFactoryBase {
   @override
   Note create({
     required String title,
-    required body,
+    required String body,
     required String categoryId,
   }) {
     return Note(

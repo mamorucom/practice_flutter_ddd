@@ -12,7 +12,7 @@ abstract class NoteRepositoryBase {
   Future<T> transaction<T>(Future<T> Function() f);
   Future<Note?> find(NoteId id);
   Future<Note?> findByTitle(NoteTitle title);
-  Future<Note?> findByCategory(CategoryId categoryId);
+  Future<List<Note>> findByCategory(CategoryId categoryId);
   Future<int?> countByCategory(CategoryId categoryId);
   Future<void> save(Note note);
   Future<void> remove(Note note);
@@ -70,14 +70,14 @@ class NoteRepository implements NoteRepositoryBase {
   }
 
   @override
-  Future<Note?> findByCategory(CategoryId categoryId) async {
+  Future<List<Note>> findByCategory(CategoryId categoryId) async {
     final list = await _dbHelper.rawQuery(
       'SELECT * FROM notes WHERE category_id = ?',
       <String>[categoryId.value],
     );
 
     // 検索してもなければnull, あればmap->ノートオブジェクトに変換して返す.
-    return list.isEmpty ? null : toNote(list[0]);
+    return list.isEmpty ? <Note>[] : list.map((data) => toNote(data)).toList();
   }
 
   ///
