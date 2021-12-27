@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             app: CategoryAppService(
               factory: CategoryFactory(),
               repository: context.read<CategoryRepositoryBase>(),
-              // noteRepository: context.read<NoteRepositoryBase>(),
+              noteRepository: context.read<NoteRepositoryBase>(),
             ),
           ),
         ),

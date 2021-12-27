@@ -6,9 +6,10 @@ import 'package:practice_flutter_ddd/domain/category/category_repository.dart';
 import 'package:practice_flutter_ddd/domain/category/category_service.dart';
 import 'package:practice_flutter_ddd/domain/category/value/category_id.dart';
 import 'package:practice_flutter_ddd/domain/category/value/category_name.dart';
+import 'package:practice_flutter_ddd/domain/note/note_repository.dart';
 
 import 'dto/category_dto.dart';
-// import 'package:practice_flutter_ddd/domain/note/note_repository_base.dart';
+import 'package:practice_flutter_ddd/domain/note/note_repository_base.dart';
 // import 'package:practice_flutter_ddd/application/dto/category_dto.dart';
 
 export 'package:practice_flutter_ddd/application/dto/category_dto.dart';
@@ -23,13 +24,16 @@ class CategoryAppService {
   CategoryAppService({
     required CategoryFactoryBase factory,
     required CategoryRepositoryBase repository,
+    required NoteRepositoryBase noteRepository,
   })  : _factory = factory,
         _repository = repository,
-        _service = CategoryService(repository: repository);
+        _service = CategoryService(repository: repository),
+        _noteRepository = noteRepository;
 
   final CategoryFactoryBase _factory;
   final CategoryRepositoryBase _repository;
   final CategoryService _service;
+  final NoteRepositoryBase _noteRepository;
 
   ///
   /// カテゴリを登録する
@@ -109,7 +113,12 @@ class CategoryAppService {
         );
       }
 
-      // TODO: メモがあればエラー
+      // メモがあればエラー
+      final countByCategory =
+          await _noteRepository.countByCategory(targetId) ?? 0;
+      if (countByCategory > 0) {
+        throw RemovalException(code: ExceptionCode.category);
+      }
 
       // 削除
       await _repository.remove(targetCategory);
