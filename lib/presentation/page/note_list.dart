@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:practice_flutter_ddd/domain/note/note_factory.dart';
+import 'package:practice_flutter_ddd/domain/note/note_repository.dart';
 import 'package:practice_flutter_ddd/presentation/widget/note/edit_dialog.dart';
 import 'package:provider/provider.dart';
 // import 'package:practice_flutter_ddd/domain/note/note_repository.dart';
@@ -19,16 +21,16 @@ class NoteListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider<NoteNotifier>(
-        //   create: (_) => NoteNotifier(
-        //     app: NoteAppService(
-        //       factory: const NoteFactory(),
-        //       repository:
-        //           Provider.of<NoteRepositoryBase>(context, listen: false),
-        //     ),
-        //     categoryId: category.id,
-        //   ),
-        // ),
+        ChangeNotifierProvider<NoteNotifier>(
+          create: (_) => NoteNotifier(
+            app: NoteAppService(
+              factory: NoteFactory(),
+              repository:
+                  Provider.of<NoteRepositoryBase>(context, listen: false),
+            ),
+            categoryId: category.id,
+          ),
+        ),
 
         ///
         /// EditingControllerをChangeNotifierしてる!?
