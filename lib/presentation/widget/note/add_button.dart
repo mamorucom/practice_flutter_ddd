@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:practice_flutter_ddd/application/dto/category_dto.dart';
-import 'package:provider/provider.dart';
 import 'package:practice_flutter_ddd/presentation/notifier/note_notifier.dart';
 import 'package:practice_flutter_ddd/presentation/widget/note/edit_dialog.dart';
+import 'package:provider/provider.dart';
 
 class NoteAddButton extends StatelessWidget {
   final CategoryDto category;

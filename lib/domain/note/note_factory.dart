@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:practice_flutter_ddd/domain/category/value/category_id.dart';
 import 'package:practice_flutter_ddd/domain/note/note.dart';
 import 'package:uuid/uuid.dart';

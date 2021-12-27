@@ -2,15 +2,12 @@ import 'package:meta/meta.dart';
 import 'package:practice_flutter_ddd/common/exception.dart';
 import 'package:practice_flutter_ddd/domain/category/category_factory.dart';
 import 'package:practice_flutter_ddd/domain/category/category_repository.dart';
-// import 'package:practice_flutter_ddd/domain/category/category_repository_base.dart';
 import 'package:practice_flutter_ddd/domain/category/category_service.dart';
 import 'package:practice_flutter_ddd/domain/category/value/category_id.dart';
 import 'package:practice_flutter_ddd/domain/category/value/category_name.dart';
 import 'package:practice_flutter_ddd/domain/note/note_repository.dart';
 
 import 'dto/category_dto.dart';
-import 'package:practice_flutter_ddd/domain/note/note_repository_base.dart';
-// import 'package:practice_flutter_ddd/application/dto/category_dto.dart';
 
 export 'package:practice_flutter_ddd/application/dto/category_dto.dart';
 
